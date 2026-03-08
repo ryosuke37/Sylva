@@ -1,51 +1,36 @@
 package io.github.ryosuke37.sylva.repository.entity;
 
-import io.github.ryosuke37.sylva.common.enums.Country;
-import io.github.ryosuke37.sylva.common.enums.Language;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "deleted_users")
-@Getter
-@Setter
-@ToString
-public class DeletedUser {
+@Table(name = "deleted_posts")
+@Data
+public class DeletedPostEntity {
     @Id
     @Column
     private String id;
 
     @Column
-    private String account;
+    private String content;
 
     @Column
-    private String name;
+    private String userId;
 
     @Column
-    private String mail;
+    private String rootPostId;
 
     @Column
-    private String hashedPassword;
+    private String parentPostId;
 
     @Column
-    private String phoneNumber;
-
-    @Column
-    private Country country;
-
-    @Column
-    private Language language;
-
-    @Column
-    private String selfIntroduction;
+    private String quotedPostId;
 
     @Column
     private LocalDateTime createdDate;

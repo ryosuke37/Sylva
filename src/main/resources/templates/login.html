@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="styleSheet">
+    <title>Sylva-login</title>
+</head>
+<body>
+<div class="header-contents">
+    <h1>Login to Sylva</h1>
+</div>
+<div class="main-contents">
+    <div class="error-message" th:if="${param.error}">
+        メールアドレスかパスワードが間違っています
+    </div>
+    <form th:action="@{/login}" th:method="post" th:object="${loginForm}">
+        <table>
+            <tr>
+                <td><label>メールアドレス</label></td>
+                <td><input type="text" th:field="*{emailAddress}" /></td>
+            </tr>
+            <tr>
+                <td><label>パスワード</label></td>
+                <td><input type="password" th:field="*{rawPassword}" /></td>
+            </tr>
+        </table>
+        <input type="submit" value="ログイン" />
+    </form>
+    登録は<a href="/signup">こちら</a>
+</div>
+</body>
+</html>

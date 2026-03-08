@@ -1,10 +1,11 @@
 package io.github.ryosuke37.sylva.repository.entity;
 
 import io.github.ryosuke37.sylva.repository.annotation.GenerateUuidV7;
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -13,10 +14,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "likes")
-@Getter
-@Setter
-@ToString
-public class Like {
+@Data
+public class LikeEntity {
     @Id
     @Column
     @GenerateUuidV7
