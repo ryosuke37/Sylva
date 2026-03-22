@@ -1,0 +1,56 @@
+.post {
+  border-bottom: 1px solid #cecece;
+  padding: 5px 5px 5px 5px;
+  margin-left: 10px;
+}
+
+.post-header {
+  display: flex;
+  align-items: end;
+}
+
+.post-header .user-nickname {
+  color: #00330d;
+  font-weight: 500;
+  padding-left: 1ch;
+  min-width: 10ch;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.post-header .user-handle {
+  font-size: small;
+  color: #0079b1;
+  padding-left: 1ch;
+  flex-grow: 1;
+  min-width: 10ch;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.post-header .post-update-status {
+  font-size: smaller;
+  color: #8fa9ff;
+  padding-left: 1ch;
+  min-width: 8ch;
+}
+
+.post-header .post-updated-date {
+  font-size: smaller;
+  color: #838383;
+  padding-left: 1ch;
+  min-width: 18ch;
+}
+
+.post-main .post-content {
+  padding: 5px 0px 10px 25px;
+  display: block;
+}
+
+pre {
+  font-size: large;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}

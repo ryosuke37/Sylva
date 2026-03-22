@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/base/style.css}" rel="styleSheet">
+    <title>Sylva-login</title>
+</head>
+<body>
+<div class="header-contents">
+    <h1>Logout from Sylva</h1>
+</div>
+<div class="main-contents">
+    <form th:action="@{/logout}" th:method="post">
+        <input type="submit" value="ログアウト" />
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/base/style.css}" rel="styleSheet">
+    <link th:href="@{/css/layout/top.css}" rel="styleSheet">
+    <link th:href="@{/css/components/post.css}" rel="styleSheet">
+    <title>Sylva-top</title>
+</head>
+<body>
+<div class="main">
+    <div class="side-bar">
+        <h1>Sylva</h1>
+        <div th:if="${loginUser == null}">
+            <input class="login-button" type="button" value="ログイン" onclick="location.href='/login'">
+            <input class="signup-button" type="button" value="サインアップ" onclick="location.href='/signup'">
+        </div>
+        <div th:if="${loginUser != null}">
+            <input class="logout-button" type="button" value="ログアウト" onclick="location.href='/logout'">
+        </div>
+
+        <div th:if="${loginUser != null}">
+            メールアドレス:<span th:text="${loginUser.emailAddress}"></span><br/>
+            ユーザーID：<span th:text="${loginUser.handle}"></span><br/>
+            ユーザー名：<span th:text="${loginUser.nickname}"></span><br/>
+        </div>
+    </div>
+    <div class="time-line">
+        <div class="posts" th:each="post : ${posts}">
+            <div class="post">
+                <div class="post-header">
+                    <span class="user-nickname" th:text="${post.user.nickname}"></span>
+                    <span class="user-handle" th:text="'@' + ${post.user.handle}"></span>
+                    <span class="post-update-status" th:if="${post.createdDate} != ${post.updatedDate}" th:text="編集済み"></span>
+                    <span class="post-updated-date" th:text="${#temporals.format(post.updatedDate, 'yyyy/MM/dd HH:mm')}"></span>
+                </div>
+                <div class="post-main">
+                    <pre><span class="post-content" th:text="${post.content}"></span></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
