@@ -1,0 +1,33 @@
+.main {
+  display: flex;
+  justify-content: center;
+  padding-top: 1vh;
+}
+
+.side-bar {
+  order: 2;
+  width: 20%;
+  height: 96vh;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.sidebar:hover {
+  overflow: auto;
+}
+
+.time-line {
+  order: 1;
+  width: 60%;
+  max-width: 600px;
+  min-width: 360px;
+  height: 96vh;
+  overflow: hidden;
+  scrollbar-gutter: stable;
+  border-left: 1px solid #cecece;
+  border-right: 1px solid #cecece;
+}
+
+.time-line:hover {
+  overflow: auto;
+}
