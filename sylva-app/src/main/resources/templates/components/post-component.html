@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>post-component</title>
+</head>
+<body>
+
+<div class="post" th:fragment="post-fragment (post)" th:remove="tag" th:object="${post}">
+    <div class="post-header">
+        <span th:hidden="true" th:text="*{id}"></span>
+        <span class="user-nickname" th:text="*{user.nickname}"></span>
+        <span class="user-handle" th:text="'@' + *{user.handle}"></span>
+        <span class="post-update-status" th:if="*{createdDate} != *{updatedDate}" th:text="編集済み"></span>
+        <span class="post-updated-date" th:text="*{#temporals.format(updatedDate, 'yyyy/MM/dd HH:mm')}"></span>
+    </div>
+    <div class="post-main">
+        <pre><span class="post-content" th:text="*{content}"></span></pre>
+        <div th:if="*{quotedPost} != null" class="quoted-post" th:insert="~{:: post-fragment(post=*{quotedPost})}"></div>
+    </div>
+</div>
+
+</body>
+</html>
