@@ -46,6 +46,7 @@ public abstract class PostMapper {
             return null;
         }
         return new PostDto(
+                entity.getId(),
                 entity.getContent(),
                 userMapper.toDto(entity.getUser()),
                 withoutPostMappingToDto(entity.getRootPost()),

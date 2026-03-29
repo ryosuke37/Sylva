@@ -26,19 +26,7 @@
         </div>
     </div>
     <div class="time-line">
-        <div class="posts" th:each="post : ${posts}">
-            <div class="post">
-                <div class="post-header">
-                    <span class="user-nickname" th:text="${post.user.nickname}"></span>
-                    <span class="user-handle" th:text="'@' + ${post.user.handle}"></span>
-                    <span class="post-update-status" th:if="${post.createdDate} != ${post.updatedDate}" th:text="編集済み"></span>
-                    <span class="post-updated-date" th:text="${#temporals.format(post.updatedDate, 'yyyy/MM/dd HH:mm')}"></span>
-                </div>
-                <div class="post-main">
-                    <pre><span class="post-content" th:text="${post.content}"></span></pre>
-                </div>
-            </div>
-        </div>
+        <div class="post" th:each="post : ${posts}" th:insert="~{components/post-component :: post-fragment(post=${post})}"></div>
     </div>
 </div>
 </body>
