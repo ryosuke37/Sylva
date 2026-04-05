@@ -1,3 +1,20 @@
-.side-bar {
+.login-button,
+.signup-button,
+.logout-button {
+  color: #fff;
+  background-color: #009420;
+  border-radius: 100vh;
+  border-style: none;
+  padding: 0.5ch 2ch;
+  margin-top: 2ch;
   display: block;
+  font-size: medium;
+  text-align: center;
+}
+
+.login-button:hover,
+.signup-button:hover,
+.logout-button:hover {
+  color: #fff;
+  background: #00a824;
 }
