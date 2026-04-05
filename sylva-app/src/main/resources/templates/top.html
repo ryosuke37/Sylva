@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/base/style.css}" rel="styleSheet">
-    <link th:href="@{/css/layout/top.css}" rel="styleSheet">
     <link th:href="@{/css/components/post.css}" rel="styleSheet">
     <link th:href="@{/css/components/side-bar.css}" rel="styleSheet">
     <title>Sylva-top</title>
@@ -11,7 +10,7 @@
 <body>
 <div class="main">
     <div class="side-bar" th:insert="~{components/side-bar :: side-bar-fragment}"></div>
-    <div class="time-line">
+    <div class="content time-line">
         <div class="post" th:each="post : ${posts}" th:insert="~{components/post-component :: post-fragment(post=${post})}"></div>
     </div>
 </div>
