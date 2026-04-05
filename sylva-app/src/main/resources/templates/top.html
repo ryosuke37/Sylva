@@ -5,26 +5,12 @@
     <link th:href="@{/css/base/style.css}" rel="styleSheet">
     <link th:href="@{/css/layout/top.css}" rel="styleSheet">
     <link th:href="@{/css/components/post.css}" rel="styleSheet">
+    <link th:href="@{/css/components/side-bar.css}" rel="styleSheet">
     <title>Sylva-top</title>
 </head>
 <body>
 <div class="main">
-    <div class="side-bar">
-        <h1>Sylva</h1>
-        <div th:if="${loginUser == null}">
-            <input class="login-button" type="button" value="ログイン" onclick="location.href='/login'">
-            <input class="signup-button" type="button" value="サインアップ" onclick="location.href='/signup'">
-        </div>
-        <div th:if="${loginUser != null}">
-            <input class="logout-button" type="button" value="ログアウト" onclick="location.href='/logout'">
-        </div>
-
-        <div th:if="${loginUser != null}">
-            メールアドレス:<span th:text="${loginUser.emailAddress}"></span><br/>
-            ユーザーID：<span th:text="${loginUser.handle}"></span><br/>
-            ユーザー名：<span th:text="${loginUser.nickname}"></span><br/>
-        </div>
-    </div>
+    <div class="side-bar" th:insert="~{components/side-bar :: side-bar-fragment}"></div>
     <div class="time-line">
         <div class="post" th:each="post : ${posts}" th:insert="~{components/post-component :: post-fragment(post=${post})}"></div>
     </div>
