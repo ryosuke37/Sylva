@@ -48,6 +48,12 @@
   padding: 5px 0px 10px 25px;
 }
 
+.post-main > a {
+  text-decoration: none;
+  color: #000000;
+}
+
+
 .quoted-post {
   border-radius: 1ch;
   border: 1px solid #cecece;
@@ -55,8 +61,19 @@
   padding-top: 1ch;
 }
 
+.target {
+  padding: 25px 5px 25px 5px;
+  margin-left: 0px;
+}
+
+.descendant {
+  margin-left: 60px;
+}
+
 pre {
   font-size: large;
   line-height: 1.7;
   white-space: pre-wrap;
+  margin: 0;
+  padding: 1ch;
 }

@@ -45,4 +45,13 @@ public class PostEntity {
     @UpdateTimestamp
     @LastModifiedDate
     private LocalDateTime updatedDate;
+
+    public boolean hasParent(){
+        return parentPost != null;
+    }
+
+    @Override
+    public String toString(){
+        return super.toString();
+    }
 }

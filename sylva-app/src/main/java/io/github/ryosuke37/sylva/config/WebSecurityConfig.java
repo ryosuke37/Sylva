@@ -43,7 +43,8 @@ public class WebSecurityConfig {
                         Routes.ROOT,
                         Routes.SIGNUP,
                         Routes.LOGIN,
-                        Routes.ERROR //エラーページをログインフィルターの対象外とする。
+                        Routes.ERROR, //エラーページをログインフィルターの対象外とする。
+                        Routes.TREE
                 ).permitAll()
                 .anyRequest().authenticated()
         ).formLogin(login -> login

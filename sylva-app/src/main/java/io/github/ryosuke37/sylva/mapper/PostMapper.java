@@ -64,6 +64,9 @@ public abstract class PostMapper {
     public abstract PostDto deepMappingToDto(PostEntity entity);
 
     public List<PostDto> shallowMappingToDtos(List<PostEntity> entities) {
+        if (entities == null){
+            return null;
+        }
         ArrayList<PostDto> postDtos = new ArrayList<>();
         for (PostEntity postEntity : entities) {
             postDtos.add(shallowMappingToDto(postEntity));

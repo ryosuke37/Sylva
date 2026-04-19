@@ -15,7 +15,9 @@
         <span class="post-updated-date" th:text="*{#temporals.format(updatedDate, 'yyyy/MM/dd HH:mm')}"></span>
     </div>
     <div class="post-main">
-        <pre><span class="post-content" th:text="*{content}"></span></pre>
+        <a th:href="@{/tree/{id}(id=*{id})}">
+            <pre><span class="post-content" th:text="*{content}"></span></pre>
+        </a>
         <div th:if="*{quotedPost} != null" class="quoted-post" th:insert="~{:: post-fragment(post=*{quotedPost})}"></div>
     </div>
 </div>
