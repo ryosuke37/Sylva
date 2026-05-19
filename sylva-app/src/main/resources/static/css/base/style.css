@@ -1,3 +1,8 @@
+body {
+  min-width: 360px;
+  min-height: 640px;
+}
+
 .main {
   display: flex;
   justify-content: center;

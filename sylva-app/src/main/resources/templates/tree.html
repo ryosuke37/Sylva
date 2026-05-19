@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml" lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <link th:href="@{/css/base/style.css}" rel="styleSheet">
-    <link th:href="@{/css/components/post.css}" rel="styleSheet">
-    <link th:href="@{/css/components/side-bar.css}" rel="styleSheet">
+    <th:block th:insert="~{layout/base :: layout}"></th:block>
     <script th:src="@{/js/tree.js}"></script>
     <title>Sylva-top</title>
 </head>
 <body>
 <div class="main">
-    <div class="side-bar" th:insert="~{components/side-bar :: side-bar-fragment}"></div>
+    <div class="post-modal" th:insert="~{fragment/post-modal :: post-modal-fragment}"></div>
+    <div class="side-bar" th:insert="~{fragment/side-bar :: side-bar-fragment}"></div>
     <div class="content">
         <div class="post-tree">
             <div th:if="${tree == null}">
@@ -19,13 +17,13 @@
             <th:block th:unless="${tree == null}" th:object="${tree}">
                 <th:block th:if="${tree.ancestors != null}">
                     <th:block th:each="ancestor : *{ancestors}">
-                        <div class="ancestor post" th:insert="~{components/post-component :: post-fragment(${ancestor})}"></div>
+                        <div class="ancestor post" th:insert="~{fragment/post-fragment :: post-fragment(${ancestor})}"></div>
                     </th:block>
                 </th:block>
-                <div class="target post" th:insert="~{components/post-component :: post-fragment(post=*{target})}"></div>
+                <div class="target post" th:insert="~{fragment/post-fragment :: post-fragment(post=*{target})}"></div>
                 <th:block th:if="${tree.descendants != null}">
                     <th:block th:each="descendant : *{descendants}">
-                        <div class="descendant post" th:insert="~{components/post-component :: post-fragment(${descendant})}"></div>
+                        <div class="descendant post" th:insert="~{fragment/post-fragment :: post-fragment(${descendant})}"></div>
                     </th:block>
                 </th:block>
             </th:block>

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Value
 @With
-public class PostDto {
+public class PostDto{
     String id;
     String content;
     UserDto user;

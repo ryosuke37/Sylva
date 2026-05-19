@@ -3,6 +3,7 @@ package io.github.ryosuke37.sylva.controller;
 import io.github.ryosuke37.sylva.controller.dto.PostDto;
 import io.github.ryosuke37.sylva.controller.dto.PostTreeDto;
 import io.github.ryosuke37.sylva.controller.dto.UserDto;
+import io.github.ryosuke37.sylva.controller.form.PostForm;
 import io.github.ryosuke37.sylva.service.AuthService;
 import io.github.ryosuke37.sylva.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class SylvaController {
         List<PostDto> posts = postService.getLatestPostDtosForTop();
         mav.addObject("loginUser", loginUser);
         mav.addObject("posts", posts);
+        mav.addObject("postForm", new PostForm());
         mav.addObject("message", "Welcome to Sylva!");
         return mav;
     }
@@ -46,6 +48,7 @@ public class SylvaController {
         PostTreeDto tree = postService.getPostTree(id);
         mav.addObject("loginUser", loginUser);
         mav.addObject("tree", tree);
+        mav.addObject("postForm", new PostForm());
         return mav;
     }
 }

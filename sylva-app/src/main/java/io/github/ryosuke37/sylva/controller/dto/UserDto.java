@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Value
 @With
 public class UserDto {
+    String id;
     String handle;
     String nickname;
     String emailAddress;

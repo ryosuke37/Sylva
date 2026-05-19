@@ -2,9 +2,13 @@ package io.github.ryosuke37.sylva.service;
 
 import io.github.ryosuke37.sylva.controller.dto.PostDto;
 import io.github.ryosuke37.sylva.controller.dto.PostTreeDto;
+import io.github.ryosuke37.sylva.controller.form.PostForm;
 import io.github.ryosuke37.sylva.mapper.PostMapper;
 import io.github.ryosuke37.sylva.repository.PostRepository;
 import io.github.ryosuke37.sylva.repository.entity.PostEntity;
+import io.github.ryosuke37.sylva.repository.entity.UserEntity;
+import io.github.ryosuke37.sylva.service.exception.PostNotFoundException;
+import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -30,6 +34,40 @@ public class PostService {
     ) {
         this.postRepository = postRepository;
         this.postMapper = postMapper;
+    }
+
+    public PostDto savePost(@Nonnull PostForm postForm, @Nonnull String userId) throws PostNotFoundException {
+        String parentPostId = postForm.getParentPostId();
+        String quotedPostId = postForm.getQuotedPostId();
+        PostEntity parentPost = null;
+        PostEntity rootPost = null;
+        PostEntity quotedPost = null;
+
+        if (!parentPostId.isBlank()) {
+            parentPost = postRepository.findById(parentPostId)
+                    .orElseThrow(() -> new PostNotFoundException("No post designated as the parent post exists."));
+            rootPost = postRepository.findById(parentPost.getRootPost().getId())
+                    .orElseThrow(() -> new PostNotFoundException("Root post not exists."));
+        }
+
+        if (!quotedPostId.isBlank()) {
+            quotedPost = postRepository.findById(postForm.getQuotedPostId())
+                    .orElseThrow(() -> new PostNotFoundException("No post designated as the quoted post exists."));
+        }
+
+        PostEntity newPost = new PostEntity();
+
+        UserEntity user = new UserEntity();
+        user.setId(userId);
+
+        newPost.setUser(user);
+        newPost.setContent(postForm.getContent());
+        newPost.setRootPost(rootPost);
+        newPost.setParentPost(parentPost);
+        newPost.setQuotedPost(quotedPost);
+
+        PostEntity createdPost = postRepository.save(newPost);
+        return postMapper.shallowMappingToDto(createdPost);
     }
 
     public List<PostDto> getLatestPostDtosForTop() {
@@ -74,7 +112,7 @@ public class PostService {
         for (PostEntity p : sameRootPost) {
             if (p.getId().equals(parentPostId)) {
                 ancestorPosts.add(p);
-                if(!p.getId().equals(rootPostId)){
+                if (!p.getId().equals(rootPostId)) {
                     parentPostId = p.getParentPost().getId();
                 }
             }

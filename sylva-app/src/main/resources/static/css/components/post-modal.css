@@ -1,0 +1,93 @@
+#post-modal {
+  border: none;
+  border-radius: 16px;
+  width: 60vw;
+  min-height: 30vh;
+  max-height: 60vh;
+}
+
+#post-modal[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  width: 100%;
+  height: 20px;
+  flex-shrink: 0;
+
+  display: flex;
+  justify-content: flex-end;
+}
+
+#post-modal-close-button {
+  width: fit-content;
+  height: fit-content;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(223, 45, 45);
+  padding: 0 2px;
+}
+
+#post-modal-close-button span {
+  text-align: center;
+  color: white;
+  font-size: medium !important;
+}
+
+.modal-body {
+  margin-top: 5px;
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  scrollbar-gutter: stable;
+
+  display: flex;
+  flex-direction: column;
+}
+
+form {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  box-sizing: border-box;
+  display: block;
+  margin: 0 5%;
+  font-size: medium;
+  resize: none;
+  width: 90%;
+  min-height: 120px;
+  flex: 1;
+  min-height: 120px;
+  border-radius: 8px;
+  border: 1px solid lightgray;
+  padding: 10px;
+}
+
+.modal-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#post-submit-button {
+  color: #fff;
+  background-color: #009420;
+  border-radius: 100vh;
+  border-style: none;
+  padding: 0.5ch 2ch;
+  display: block;
+  font-size: medium;
+  text-align: center;
+}
+
+#post-submit-button:hover {
+  color: #fff;
+  background: #00a824;
+}
