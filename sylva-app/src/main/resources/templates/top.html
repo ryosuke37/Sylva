@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml" lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <link th:href="@{/css/base/style.css}" rel="styleSheet">
-    <link th:href="@{/css/components/post.css}" rel="styleSheet">
-    <link th:href="@{/css/components/side-bar.css}" rel="styleSheet">
+    <th:block th:insert="~{layout/base :: layout}"></th:block>
     <title>Sylva-top</title>
 </head>
 <body>
 <div class="main">
-    <div class="side-bar" th:insert="~{components/side-bar :: side-bar-fragment}"></div>
+    <th:block th:insert="~{fragment/post-modal :: post-modal-fragment}"></th:block>
+    <div class="side-bar" th:insert="~{fragment/side-bar :: side-bar-fragment}"></div>
     <div class="content time-line">
-        <div class="post" th:each="post : ${posts}" th:insert="~{components/post-component :: post-fragment(post=${post})}"></div>
+        <div class="post" th:each="post : ${posts}" th:insert="~{fragment/post-fragment :: post-fragment(post=${post})}"></div>
     </div>
 </div>
 </body>

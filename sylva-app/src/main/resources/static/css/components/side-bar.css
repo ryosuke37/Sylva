@@ -1,6 +1,7 @@
 .login-button,
 .signup-button,
-.logout-button {
+.logout-button,
+.post-create-button {
   color: #fff;
   background-color: #009420;
   border-radius: 100vh;
