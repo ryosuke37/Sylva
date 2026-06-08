@@ -16,7 +16,7 @@ body {
   overflow: hidden;
 }
 
-.sidebar:hover {
+.side-bar:hover {
   overflow: auto;
 }
 
@@ -42,5 +42,5 @@ body {
 }
 
 .error-message {
-    color: crimson;
+  color: crimson;
 }

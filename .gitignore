@@ -31,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/sylva-app/src/main/resources/static/react/

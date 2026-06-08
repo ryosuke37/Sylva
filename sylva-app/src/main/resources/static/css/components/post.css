@@ -53,12 +53,15 @@
   color: #000000;
 }
 
-
 .quoted-post {
   border-radius: 1ch;
   border: 1px solid #cecece;
   padding-left: 1ch;
   padding-top: 1ch;
+}
+
+.quoted-post > .post {
+  border-bottom: none;
 }
 
 .target {
