@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml" lang="ja">
-<head>
+  <head>
     <th:block th:insert="~{layout/base :: layout}"></th:block>
+    <script defer type="module" th:src="@{/react/assets/timeline.js}"></script>
+    <script defer type="module" th:src="@{/react/assets/modal.js}"></script>
     <title>Sylva-top</title>
 </head>
 <body>
 <div class="main">
-    <th:block th:insert="~{fragment/post-modal :: post-modal-fragment}"></th:block>
+    <div id="post-modal-root"></div>
     <div class="side-bar" th:insert="~{fragment/side-bar :: side-bar-fragment}"></div>
-    <div class="content time-line">
-        <div class="post" th:each="post : ${posts}" th:insert="~{fragment/post-fragment :: post-fragment(post=${post})}"></div>
-    </div>
+    <div id="timeline-root" class="content"></div>
 </div>
 </body>
 </html>

@@ -13,7 +13,7 @@
         <input class="signup-button" type="button" value="サインアップ" onclick="location.href='/signup'">
     </div>
     <div th:if="${loginUser != null}">
-        <th:block th:insert="~{fragment/post-create-buttons :: create-new-post-button-fragment}"></th:block>
+        <div id="new-post-button-root"></div>
         <input class="logout-button" type="button" value="ログアウト" onclick="location.href='/logout'">
     </div>
 

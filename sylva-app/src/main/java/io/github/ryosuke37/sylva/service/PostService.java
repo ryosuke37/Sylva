@@ -1,5 +1,6 @@
 package io.github.ryosuke37.sylva.service;
 
+import io.github.ryosuke37.sylva.common.enums.FetchDirection;
 import io.github.ryosuke37.sylva.controller.dto.PostDto;
 import io.github.ryosuke37.sylva.controller.dto.PostTreeDto;
 import io.github.ryosuke37.sylva.controller.form.PostForm;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -70,12 +72,35 @@ public class PostService {
         return postMapper.shallowMappingToDto(createdPost);
     }
 
-    public List<PostDto> getLatestPostDtosForTop() {
-        List<PostEntity> postEntities = postRepository
-                .findBy(
-                        fetchUser().and(parentPostIdIs(null)),
-                        p -> p.page(PageRequest.of(0, POST_PER_PAGE, oderByCreatedDate(Sort.Direction.DESC))))
-                .getContent();
+    public List<PostDto> getTimeline(int limit, LocalDateTime point, FetchDirection direction) {
+        int MAX_NUM_RETURN_POST = 100;
+        int clippedLimit = Math.max(0, Math.min(limit, MAX_NUM_RETURN_POST));
+        List<PostEntity> postEntities;
+
+        if (direction == FetchDirection.Newer) {
+            postEntities = postRepository
+                    .findBy(
+                            fetchUser()
+                                    .and(parentPostIdIs(null))
+                                    .and(createdDateBetween(point.plusNanos(1), null)),
+                            p -> p
+                                    .sortBy(oderByCreatedDate(Sort.Direction.ASC))
+                                    .limit(clippedLimit)
+                                    .all()
+                    );
+            Collections.reverse(postEntities);
+        } else {
+            postEntities = postRepository
+                    .findBy(
+                            fetchUser()
+                                    .and(parentPostIdIs(null))
+                                    .and(createdDateBetween(null, point.minusNanos(1))),
+                            p -> p
+                                    .sortBy(oderByCreatedDate(Sort.Direction.DESC))
+                                    .limit(clippedLimit)
+                                    .all()
+                    );
+        }
 
         return postMapper.shallowMappingToDtos(postEntities);
     }
@@ -88,9 +113,9 @@ public class PostService {
         List<PostEntity> parents = getAncestorPosts(target);
         List<PostEntity> descendants = getDescendantPosts(target);
         return new PostTreeDto(
-                postMapper.shallowMappingToDtos(parents),
+                parents == null ? Collections.emptyList() : postMapper.shallowMappingToDtos(parents),
                 postMapper.shallowMappingToDto(target),
-                postMapper.shallowMappingToDtos(descendants)
+                descendants == null ? Collections.emptyList() : postMapper.shallowMappingToDtos(descendants)
         );
     }
 

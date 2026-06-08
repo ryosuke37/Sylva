@@ -38,13 +38,16 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/react/**").permitAll()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .requestMatchers(
                         Routes.ROOT,
                         Routes.SIGNUP,
                         Routes.LOGIN,
                         Routes.ERROR, //エラーページをログインフィルターの対象外とする。
-                        Routes.TREE
+                        Routes.TREE,
+                        Routes.API_TIMELINE,
+                        Routes.API_TREE
                 ).permitAll()
                 .anyRequest().authenticated()
         ).formLogin(login -> login
