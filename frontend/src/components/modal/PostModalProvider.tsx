@@ -1,8 +1,13 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 
 import { PostModalContext } from "./PostModalContext";
+import type { PostDto } from "../../types/PostDto";
+import { TimelineContext } from "../timeline/TimelineContext";
+import { TreeContext } from "../tree/TreeContext";
 
 export function PostModalProvider({ children }: React.PropsWithChildren) {
+  const timeline = useContext(TimelineContext)!;
+  const tree = useContext(TreeContext)!;
   const [parentPostId, setParentPostId] = useState<string>("");
   const [quotedPostId, setQuotedPostId] = useState<string>("");
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -32,6 +37,14 @@ export function PostModalProvider({ children }: React.PropsWithChildren) {
     dialogRef.current?.close();
   }
 
+  function onPostCreated(post: PostDto) {
+    if (timeline) {
+      timeline.prependPost(post);
+    } else if (tree) {
+      tree.prependDescendant(post);
+    }
+  }
+
   return (
     <PostModalContext.Provider
       value={{
@@ -42,6 +55,7 @@ export function PostModalProvider({ children }: React.PropsWithChildren) {
         openReply: openReply,
         openQuote: openQuote,
         close: close,
+        onPostCreated: onPostCreated,
       }}
     >
       {children}
