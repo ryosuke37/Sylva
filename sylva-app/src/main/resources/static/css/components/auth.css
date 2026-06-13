@@ -1,0 +1,75 @@
+.error-message {
+  color: crimson;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+header {
+  margin-top: 48px;
+  margin-bottom: 32px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.main {
+  padding: 32px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td {
+  padding: 8px 0;
+}
+
+td:first-child {
+  width: 120px;
+  color: #555;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+input[type="submit"] {
+  display: block;
+  margin-top: 16px;
+  margin-left: auto;
+  color: #fff;
+  background-color: #009420;
+  border-radius: 100vh;
+  border-style: none;
+  padding: 0.5ch 2ch;
+  margin-top: 2ch;
+  display: block;
+  font-size: medium;
+  text-align: center;
+}
+
+.main > span {
+  display: block;
+  margin-top: 16px;
+  text-align: center;
+  color: #666;
+}
