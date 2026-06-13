@@ -2,6 +2,7 @@ package io.github.ryosuke37.sylva.api;
 
 import io.github.ryosuke37.sylva.api.error.ApiError;
 import io.github.ryosuke37.sylva.service.exception.PostNotFoundException;
+import io.github.ryosuke37.sylva.service.exception.UserNotFoundException;
 import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -48,7 +49,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     private final List<Class<? extends Exception>> rawMessageExceptions =
             List.of(
                     // getMessageで得られるメッセージをそのままユーザーに見せたいExceptionは、ここで列挙する。
-                    PostNotFoundException.class
+                    PostNotFoundException.class,
+                    UserNotFoundException.class
             );
 
     private String resolveMessage(Exception exception, WebRequest request) {

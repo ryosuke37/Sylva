@@ -5,6 +5,7 @@ import io.github.ryosuke37.sylva.controller.form.PostForm;
 import io.github.ryosuke37.sylva.service.AuthService;
 import io.github.ryosuke37.sylva.service.PostService;
 import io.github.ryosuke37.sylva.service.exception.PostNotFoundException;
+import io.github.ryosuke37.sylva.service.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +34,8 @@ public class PostApiController {
 
     @PostMapping
     public ResponseEntity<PostDto> post(
-            @Validated @RequestBody PostForm postForm,
-            UriComponentsBuilder uriComponentsBuilder
-    ) throws PostNotFoundException {
+            @Validated @RequestBody PostForm postForm
+    ) throws PostNotFoundException, UserNotFoundException {
         PostDto createdPost = postService.savePost(postForm, authService.getLoginUser().getId());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPost);
