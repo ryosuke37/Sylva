@@ -8,9 +8,8 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        timeline: "src/main-timeline.tsx",
+        top: "src/main-top.tsx",
         tree: "src/main-tree.tsx",
-        modal: "src/main-modal.tsx",
       },
       output: {
         entryFileNames: "assets/[name].js",

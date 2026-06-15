@@ -6,9 +6,11 @@ import io.github.ryosuke37.sylva.controller.dto.PostTreeDto;
 import io.github.ryosuke37.sylva.controller.form.PostForm;
 import io.github.ryosuke37.sylva.mapper.PostMapper;
 import io.github.ryosuke37.sylva.repository.PostRepository;
+import io.github.ryosuke37.sylva.repository.UserRepository;
 import io.github.ryosuke37.sylva.repository.entity.PostEntity;
 import io.github.ryosuke37.sylva.repository.entity.UserEntity;
 import io.github.ryosuke37.sylva.service.exception.PostNotFoundException;
+import io.github.ryosuke37.sylva.service.exception.UserNotFoundException;
 import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -20,25 +22,29 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static io.github.ryosuke37.sylva.repository.specification.PostSpecification.*;
 
 @Service
 public class PostService {
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
     private final PostMapper postMapper;
-    private final int POST_PER_PAGE = 10;
 
     @Autowired
     PostService(
             PostRepository postRepository,
+            UserRepository userRepository,
             PostMapper postMapper
     ) {
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
         this.postMapper = postMapper;
     }
 
-    public PostDto savePost(@Nonnull PostForm postForm, @Nonnull String userId) throws PostNotFoundException {
+    public PostDto savePost(@Nonnull PostForm postForm, @Nonnull String userId)
+            throws PostNotFoundException, UserNotFoundException {
         String parentPostId = postForm.getParentPostId();
         String quotedPostId = postForm.getQuotedPostId();
         PostEntity parentPost = null;
@@ -59,8 +65,8 @@ public class PostService {
 
         PostEntity newPost = new PostEntity();
 
-        UserEntity user = new UserEntity();
-        user.setId(userId);
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new PostNotFoundException("User not exists."));
 
         newPost.setUser(user);
         newPost.setContent(postForm.getContent());

@@ -2,29 +2,36 @@ import { useContext, useState } from "react";
 
 import { createPost } from "../../api/postApi";
 import { PostModalContext } from "./PostModalContext";
+import { createPortal } from "react-dom";
 
 export function PostModal() {
-  const modal = useContext(PostModalContext);
+  const postModalRoot = document.getElementById("post-modal-root");
+  const modalProvider = useContext(PostModalContext);
+
+  if (!postModalRoot) {
+    throw new Error("PostModalRoot not found");
+  }
+
+  if (!modalProvider) {
+    throw new Error("PostModalProvider not found");
+  }
 
   const [content, setContent] = useState("");
   const [errors, setErrors] = useState<string[]>([]);
 
-  if (!modal) {
-    throw new Error("PostModalProvider not found");
-  }
-
-  async function submit() {
+  async function post() {
     try {
-      await createPost({
+      const createdPost = await createPost({
         content,
-        parentPostId: modal!.parentPostId,
-        quotedPostId: modal!.quotedPostId,
+        parentPostId: modalProvider!.parentPostId,
+        quotedPostId: modalProvider!.quotedPostId,
       });
 
       setContent("");
       setErrors([]);
 
-      modal!.close();
+      modalProvider!.onPostCreated(createdPost);
+      modalProvider!.close();
     } catch (e: any) {
       if (e?.details && Array.isArray(e.details)) {
         setErrors(e.details.map((detail: any) => detail.message));
@@ -39,13 +46,13 @@ export function PostModal() {
     setErrors([]);
   }
 
-  return (
-    <dialog id='post-modal' ref={modal.dialogRef} onClose={handleClose}>
+  return createPortal(
+    <dialog id='post-modal' ref={modalProvider.dialogRef} onClose={handleClose}>
       <div className='modal-header'>
         <button
           id='post-modal-close-button'
           type='button'
-          onClick={() => modal.close()}
+          onClick={() => modalProvider.close()}
         >
           <span className='material-symbols-rounded'>close</span>
         </button>
@@ -69,10 +76,11 @@ export function PostModal() {
       </div>
 
       <div className='modal-footer'>
-        <button id='post-submit-button' type='button' onClick={submit}>
+        <button id='post-submit-button' type='button' onClick={post}>
           投稿
         </button>
       </div>
-    </dialog>
+    </dialog>,
+    postModalRoot
   );
 }
