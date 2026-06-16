@@ -26,6 +26,12 @@ export function TreeProvider({ postId, children }: Props) {
     refresh();
   }, [refresh]);
 
+  function prependPost(post: PostDto) {
+    if (post.parentPost?.id == tree?.target.id) {
+      prependDescendant(post);
+    }
+  }
+
   function prependDescendant(post: PostDto) {
     setTree((prev) => {
       if (!prev) {
@@ -44,7 +50,7 @@ export function TreeProvider({ postId, children }: Props) {
       value={{
         tree,
         refresh,
-        prependDescendant,
+        prependPost: prependPost,
       }}
     >
       {children}

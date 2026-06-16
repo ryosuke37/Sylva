@@ -51,7 +51,7 @@ export function PostModalProvider({ children }: React.PropsWithChildren) {
     if (timeline) {
       timeline.prependPost(post);
     } else if (tree) {
-      tree.prependDescendant(post);
+      tree.prependPost(post);
     }
   }
 
