@@ -35,7 +35,9 @@ export function TimelineProvider({ children }: React.PropsWithChildren) {
   }
 
   function prependPost(post: PostDto) {
-    setPosts((prev) => [post, ...prev]);
+    if (post.parentPost == null) {
+      setPosts((prev) => [post, ...prev]);
+    }
   }
 
   return (

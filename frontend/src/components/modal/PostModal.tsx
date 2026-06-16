@@ -32,11 +32,13 @@ export function PostModal() {
 
   async function post() {
     try {
+      const parentPostId =
+        modalProvider!.parentPost === null ? "" : modalProvider!.parentPost.id;
       const quotedPostId =
         modalProvider!.quotedPost === null ? "" : modalProvider!.quotedPost.id;
       const createdPost = await createPost({
         content,
-        parentPostId: modalProvider!.parentPostId,
+        parentPostId: parentPostId,
         quotedPostId: quotedPostId,
       });
 
@@ -72,6 +74,9 @@ export function PostModal() {
       </div>
 
       <div className='modal-body'>
+        {modalProvider!.parentPost && (
+          <Post post={modalProvider!.parentPost} needFooter={false} />
+        )}
         <textarea
           className='tweet-box'
           placeholder='いまどうしてる？'

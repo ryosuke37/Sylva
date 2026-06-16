@@ -61,7 +61,9 @@ public class PostService {
         if (!parentPostId.isBlank()) {
             parentPost = postRepository.findById(parentPostId)
                     .orElseThrow(() -> new PostNotFoundException("No post designated as the parent post exists."));
-            rootPost = postRepository.findById(parentPost.getRootPost().getId())
+            rootPost = parentPost.getRootPost() == null
+                    ? parentPost
+                    : postRepository.findById(parentPost.getRootPost().getId())
                     .orElseThrow(() -> new PostNotFoundException("Root post not exists."));
         }
 
