@@ -18,12 +18,12 @@ export function CreateNewPostButton() {
   );
 }
 
-export function ReplyPostButton({ parentPostId }: { parentPostId: string }) {
+export function ReplyButton({ parentPostId }: { parentPostId: string }) {
   const modal = useContext(PostModalContext)!;
 
   return (
     <button
-      className='post-create-button'
+      className='reply-button'
       onClick={() => modal.openReply(parentPostId)}
     >
       <span className='material-symbols-rounded'>comment</span>

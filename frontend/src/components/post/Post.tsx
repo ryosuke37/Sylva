@@ -1,5 +1,5 @@
 import type { PostDto } from "../../types/PostDto";
-import { QuotePostButton } from "../modal/PostCreateButton";
+import { QuotePostButton, ReplyButton } from "../modal/PostCreateButton";
 
 type Props = {
   post: PostDto;
@@ -41,6 +41,7 @@ export function Post({ post, needFooter = true }: Props) {
       {needFooter && (
         <div className='post-footer'>
           <QuotePostButton quotedPostId={post.id} />
+          <ReplyButton parentPostId={post.id} />
         </div>
       )}
     </div>

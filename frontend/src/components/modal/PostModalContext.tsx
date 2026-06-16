@@ -5,7 +5,7 @@ export type PostModalContextType = {
   dialogRef: RefObject<HTMLDialogElement | null>;
   isOpen: boolean;
   isLoggedIn: boolean;
-  parentPostId: string;
+  parentPost: PostDto | null;
   quotedPost: PostDto | null;
   openNewPost(): void;
   openReply(postId: string): void;

@@ -92,3 +92,9 @@ pre {
   background-color: transparent;
   font-variation-settings: "wght" 100;
 }
+
+.reply-button {
+  border: none;
+  background-color: transparent;
+  font-variation-settings: "wght" 100;
+}

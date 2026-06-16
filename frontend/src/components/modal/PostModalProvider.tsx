@@ -12,26 +12,26 @@ export function PostModalProvider({ children }: React.PropsWithChildren) {
   const tree = useContext(TreeContext)!;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const isLoggedIn = getLoginUserId() != null;
-  const [parentPostId, setParentPostId] = useState<string>("");
+  const [parentPost, setParentPost] = useState<PostDto | null>(null);
   const [quotedPost, setQuotedPost] = useState<PostDto | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   function openNewPost() {
-    setParentPostId("");
+    setParentPost(null);
     setQuotedPost(null);
 
     open();
   }
 
-  function openReply(postId: string) {
-    setParentPostId(postId);
+  async function openReply(postId: string) {
+    setParentPost(await getPost(postId));
     setQuotedPost(null);
 
     open();
   }
 
   async function openQuote(postId: string) {
-    setParentPostId("");
+    setParentPost(null);
     setQuotedPost(await getPost(postId));
 
     open();
@@ -61,7 +61,7 @@ export function PostModalProvider({ children }: React.PropsWithChildren) {
         dialogRef: dialogRef,
         isOpen: isOpen,
         isLoggedIn: isLoggedIn,
-        parentPostId: parentPostId,
+        parentPost: parentPost,
         quotedPost: quotedPost,
         openNewPost: openNewPost,
         openReply: openReply,
