@@ -87,14 +87,11 @@ pre {
   justify-content: end;
 }
 
-.quote-post-button {
-  border: none;
-  background-color: transparent;
-  font-variation-settings: "wght" 100;
-}
-
+.quote-post-button,
 .reply-button {
   border: none;
+  margin-right: 16px;
+  color: #8d8d8d;
   background-color: transparent;
-  font-variation-settings: "wght" 100;
+  font-variation-settings: "FILL" 1, "wght" 200;
 }
