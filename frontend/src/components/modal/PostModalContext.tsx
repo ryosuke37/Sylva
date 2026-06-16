@@ -3,8 +3,10 @@ import type { PostDto } from "../../types/PostDto";
 
 export type PostModalContextType = {
   dialogRef: RefObject<HTMLDialogElement | null>;
+  isOpen: boolean;
+  isLoggedIn: boolean;
   parentPostId: string;
-  quotedPostId: string;
+  quotedPost: PostDto | null;
   openNewPost(): void;
   openReply(postId: string): void;
   openQuote(postId: string): void;

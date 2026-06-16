@@ -36,7 +36,7 @@ export function QuotePostButton({ quotedPostId }: { quotedPostId: string }) {
 
   return (
     <button
-      className='post-create-button'
+      className='quote-post-button'
       onClick={() => modal.openQuote(quotedPostId)}
     >
       <span className='material-symbols-rounded'>format_quote</span>

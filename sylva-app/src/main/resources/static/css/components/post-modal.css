@@ -70,6 +70,10 @@ textarea {
   padding: 10px;
 }
 
+.modal-body > .post {
+  border: none;
+}
+
 .modal-footer {
   margin-top: auto;
   display: flex;
@@ -90,4 +94,9 @@ textarea {
 #post-submit-button:hover {
   color: #fff;
   background: #00a824;
+}
+
+#post-submit-button:disabled {
+  color: #bdbdbd;
+  background-color: #708374;
 }

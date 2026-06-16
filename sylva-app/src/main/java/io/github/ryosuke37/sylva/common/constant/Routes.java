@@ -11,4 +11,5 @@ public final class Routes {
     public static final String TREE = "/tree/**";
     public static final String API_TIMELINE = "/api/timeline/**";
     public static final String API_TREE = "/api/tree/**";
+    public static final String API_POST = "/api/post/**";
 }

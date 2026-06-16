@@ -1,8 +1,9 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { createPost } from "../../api/postApi";
 import { PostModalContext } from "./PostModalContext";
 import { createPortal } from "react-dom";
+import { Post } from "../post/Post";
 
 export function PostModal() {
   const postModalRoot = document.getElementById("post-modal-root");
@@ -19,12 +20,24 @@ export function PostModal() {
   const [content, setContent] = useState("");
   const [errors, setErrors] = useState<string[]>([]);
 
+  useEffect(() => {
+    if (!modalProvider.isOpen) {
+      return;
+    }
+
+    if (!modalProvider!.isLoggedIn) {
+      setErrors(["投稿するにはログインが必要です"]);
+    }
+  }, [modalProvider.isOpen]);
+
   async function post() {
     try {
+      const quotedPostId =
+        modalProvider!.quotedPost === null ? "" : modalProvider!.quotedPost.id;
       const createdPost = await createPost({
         content,
         parentPostId: modalProvider!.parentPostId,
-        quotedPostId: modalProvider!.quotedPostId,
+        quotedPostId: quotedPostId,
       });
 
       setContent("");
@@ -65,6 +78,9 @@ export function PostModal() {
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
+        {modalProvider!.quotedPost && (
+          <Post post={modalProvider!.quotedPost} needFooter={false} />
+        )}
 
         <ul className='error-messages'>
           {errors.map((error) => (
@@ -76,7 +92,12 @@ export function PostModal() {
       </div>
 
       <div className='modal-footer'>
-        <button id='post-submit-button' type='button' onClick={post}>
+        <button
+          id='post-submit-button'
+          type='button'
+          disabled={!modalProvider!.isLoggedIn}
+          onClick={post}
+        >
           投稿
         </button>
       </div>
