@@ -4,44 +4,54 @@ import { PostModalContext } from "./PostModalContext";
 import type { PostDto } from "../../types/PostDto";
 import { TimelineContext } from "../timeline/TimelineContext";
 import { TreeContext } from "../tree/TreeContext";
+import { getPost } from "../../api/postApi";
+import { getLoginUserId } from "../../common/auth";
 
 export function PostModalProvider({ children }: React.PropsWithChildren) {
   const timeline = useContext(TimelineContext)!;
   const tree = useContext(TreeContext)!;
-  const [parentPostId, setParentPostId] = useState<string>("");
-  const [quotedPostId, setQuotedPostId] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const isLoggedIn = getLoginUserId() != null;
+  const [parentPost, setParentPost] = useState<PostDto | null>(null);
+  const [quotedPost, setQuotedPost] = useState<PostDto | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   function openNewPost() {
-    setParentPostId("");
-    setQuotedPostId("");
+    setParentPost(null);
+    setQuotedPost(null);
 
-    dialogRef.current?.showModal();
+    open();
   }
 
-  function openReply(postId: string) {
-    setParentPostId(postId);
-    setQuotedPostId("");
+  async function openReply(postId: string) {
+    setParentPost(await getPost(postId));
+    setQuotedPost(null);
 
-    dialogRef.current?.showModal();
+    open();
   }
 
-  function openQuote(postId: string) {
-    setParentPostId("");
-    setQuotedPostId(postId);
+  async function openQuote(postId: string) {
+    setParentPost(null);
+    setQuotedPost(await getPost(postId));
 
+    open();
+  }
+
+  function open() {
+    setIsOpen(true);
     dialogRef.current?.showModal();
   }
 
   function close() {
     dialogRef.current?.close();
+    setIsOpen(false);
   }
 
   function onPostCreated(post: PostDto) {
     if (timeline) {
       timeline.prependPost(post);
     } else if (tree) {
-      tree.prependDescendant(post);
+      tree.prependPost(post);
     }
   }
 
@@ -49,8 +59,10 @@ export function PostModalProvider({ children }: React.PropsWithChildren) {
     <PostModalContext.Provider
       value={{
         dialogRef: dialogRef,
-        parentPostId: parentPostId,
-        quotedPostId: quotedPostId,
+        isOpen: isOpen,
+        isLoggedIn: isLoggedIn,
+        parentPost: parentPost,
+        quotedPost: quotedPost,
         openNewPost: openNewPost,
         openReply: openReply,
         openQuote: openQuote,

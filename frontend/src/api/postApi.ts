@@ -6,6 +6,16 @@ export interface CreatePostRequest {
   quotedPostId: string;
 }
 
+export async function getPost(postId: String) {
+  const response = await fetch(`/api/post/${postId}`);
+
+  if (!response.ok) {
+    throw new Error("Post load failed");
+  }
+
+  return response.json();
+}
+
 export async function createPost(request: CreatePostRequest) {
   const response = await fetch("/api/post", {
     method: "POST",

@@ -8,7 +8,7 @@ export interface TreeContextType {
 
   refresh(): Promise<void>;
 
-  prependDescendant(post: PostDto): void;
+  prependPost(post: PostDto): void;
 }
 
 export const TreeContext = createContext<TreeContextType | null>(null);

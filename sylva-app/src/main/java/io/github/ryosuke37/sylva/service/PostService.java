@@ -43,6 +43,13 @@ public class PostService {
         this.postMapper = postMapper;
     }
 
+    public PostDto getPost(@Nonnull String postId)
+            throws PostNotFoundException{
+        PostEntity postEntity = postRepository.findById(postId)
+                .orElseThrow(() -> new PostNotFoundException("Post not exists."));
+        return postMapper.shallowMappingToDto(postEntity);
+    }
+
     public PostDto savePost(@Nonnull PostForm postForm, @Nonnull String userId)
             throws PostNotFoundException, UserNotFoundException {
         String parentPostId = postForm.getParentPostId();
@@ -54,7 +61,9 @@ public class PostService {
         if (!parentPostId.isBlank()) {
             parentPost = postRepository.findById(parentPostId)
                     .orElseThrow(() -> new PostNotFoundException("No post designated as the parent post exists."));
-            rootPost = postRepository.findById(parentPost.getRootPost().getId())
+            rootPost = parentPost.getRootPost() == null
+                    ? parentPost
+                    : postRepository.findById(parentPost.getRootPost().getId())
                     .orElseThrow(() -> new PostNotFoundException("Root post not exists."));
         }
 
@@ -66,7 +75,7 @@ public class PostService {
         PostEntity newPost = new PostEntity();
 
         UserEntity user = userRepository.findById(userId)
-                .orElseThrow(() -> new PostNotFoundException("User not exists."));
+                .orElseThrow(() -> new UserNotFoundException("User not exists."));
 
         newPost.setUser(user);
         newPost.setContent(postForm.getContent());

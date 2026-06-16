@@ -1,10 +1,12 @@
 import type { PostDto } from "../../types/PostDto";
+import { QuotePostButton, ReplyButton } from "../modal/PostCreateButton";
 
 type Props = {
   post: PostDto;
+  needFooter?: boolean;
 };
 
-export function Post({ post }: Props) {
+export function Post({ post, needFooter = true }: Props) {
   const isEdited = post.createdDate !== post.updatedDate;
 
   const updatedDate = new Date(post.updatedDate).toLocaleString("ja-JP", {
@@ -32,10 +34,16 @@ export function Post({ post }: Props) {
         </a>
         {post.quotedPost && (
           <div className='quoted-post'>
-            <Post post={post.quotedPost} />
+            <Post post={post.quotedPost} needFooter={false} />
           </div>
         )}
       </div>
+      {needFooter && (
+        <div className='post-footer'>
+          <QuotePostButton quotedPostId={post.id} />
+          <ReplyButton parentPostId={post.id} />
+        </div>
+      )}
     </div>
   );
 }
